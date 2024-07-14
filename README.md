@@ -1,6 +1,6 @@
 ## The project is organized into several repositories:
 
-azure_datafactory/: ADF pipeline definitions and configurations
+- azure_datafactory/: ADF pipeline definitions and configurations
 - dbw_jobs/: Databricks notebooks and job definitions
 - kafka_producer/: Kafka producer application for IoT data ingestion
 - metadata/: Metadata definitions and management tools
