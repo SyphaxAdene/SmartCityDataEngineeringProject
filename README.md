@@ -17,26 +17,26 @@
 ### Parking Data
 Parking data is produced by me (mock data) and sent by the kafka producer (kafka repo) to Kafka Topic which is located in the Confluent Cloud. This data includes:
 
-Station ID
-Total parking spots
-Available spots
-Lattitude
-Longitude ...etc
+- Station ID
+- Total parking spots
+- Available spots
+- Lattitude
+- Longitude ...etc
 
 ### Events Data
 Events data is produced by me (mock data) in my local computer and send them to Azure SFTP using the WINSCP tool, Then ingested by ADF from SFTP to Bronze Layer. It includes:
 
-Event name
-Event type
-Venue
-Date and time
-Lattitude and Longitude
-Expected attendance ...etc
+- Event name
+- Event type
+- Venue
+- Date and time
+- Lattitude and Longitude
+- Expected attendance ...etc
 
 ### Weather Data
 Weather data is obtained from the Meteomatics API to enrich the events data at the gold layer. This includes:
 
-Temperature
-Precipitation
-Wind speed
-Cloud cover ...etc
+- Temperature
+- Precipitation
+- Wind speed
+- Cloud cover ...etc
