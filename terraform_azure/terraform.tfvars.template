@@ -1,0 +1,18 @@
+# terraform.tfvars
+
+# Azure Provider Configuration
+subscription_id    = "your-azure-subscription-id"
+client_id          = "your-azure-client-id"
+client_secret      = "your-azure-client-secret"
+tenant_id          = "your-azure-tenant-id"
+
+# Resource Group Configuration
+resource_group_name = "your-resource-group-name"
+resource_group_location = "your-resource-group-location"
+
+# Storage Account Configuration
+storage_account_name = "yourstorageaccountname"
+storage_account_sku  = "Standard_LRS"
+
+# Additional Variables
+# Add any other variables that your infrastructure might require

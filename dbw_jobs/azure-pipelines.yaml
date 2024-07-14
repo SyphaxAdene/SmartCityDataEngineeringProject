@@ -1,0 +1,89 @@
+trigger: none
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: databricks  # this group contains variables: DATABRICKS_TOKEN, DATABRICKS_CLUSTER_ID, DATABRICKS_HOST
+- name: DBFS_PACKAGE_PATH
+  value: 'dbfs:/FileStore/jars/'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.8'
+    addToPath: true
+
+- script: |
+    pip install --upgrade pip wheel setuptools
+  displayName: 'Install build dependencies'
+
+- script: |
+    python setup.py bdist_wheel
+  displayName: 'Build Wheel Package'
+
+- script: |
+    pip install databricks-cli PyYAML
+    export DATABRICKS_HOST=$DATABRICKS_HOST
+    export DATABRICKS_TOKEN=$DATABRICKS_TOKEN
+    VERSION=$(python setup.py --version)
+    WHEEL_FILE=$(ls dist/*.whl)
+    echo "syphax ......>>>>"
+    echo $WHEEL_FILE
+    DBFS_FILE_PATH="${DBFS_PACKAGE_PATH}myfirstwonderfulpackage-${VERSION}-py3-none-any.whl"
+    echo "Uploading $WHEEL_FILE to $DBFS_FILE_PATH"
+    databricks fs cp $WHEEL_FILE $DBFS_FILE_PATH --overwrite
+    if [ $? -ne 0 ]; then
+      echo "Failed to upload wheel file to DBFS"
+      exit 1
+    fi
+    echo "##vso[task.setvariable variable=DBFS_FILE_PATH]$DBFS_FILE_PATH"
+  displayName: 'Upload Wheel to DBFS'
+
+- script: |
+    echo "Installing package from $DBFS_FILE_PATH on cluster $DATABRICKS_CLUSTER_ID"
+    databricks libraries install --cluster-id $DATABRICKS_CLUSTER_ID --whl $DBFS_FILE_PATH
+    if [ $? -ne 0 ]; then
+      echo "Failed to install package on Databricks cluster"
+      exit 1
+    fi
+  displayName: 'Install Package on Databricks Cluster'
+
+- script: |
+    create_or_update_job() {
+      local job_name=$1
+      local json_file=$2
+      
+      # Get the job ID if it exists
+      job_id=$(databricks jobs list --output JSON | jq -r ".jobs[] | select(.settings.name == \"$job_name\") | .job_id")
+      
+      if [ -n "$job_id" ]; then
+        echo "Job '$job_name' already exists with ID $job_id. Updating..."
+        databricks jobs reset --job-id $job_id --json-file $json_file
+        echo "Job '$job_name' updated successfully. Job ID: $job_id"
+      else
+        echo "Creating new job '$job_name'..."
+        new_job=$(databricks jobs create --json-file $json_file)
+        new_job_id=$(echo $new_job | jq -r .job_id)
+        echo "Job '$job_name' created successfully. New Job ID: $new_job_id"
+      fi
+    }
+
+    # Read the job name from each JSON file and use it to create or update the job
+    for json_file in configs/databricks/workflows/*.json; do
+      job_name=$(jq -r '.name' "$json_file")
+      if [ -n "$job_name" ]; then
+        create_or_update_job "$job_name" "$json_file"
+      else
+        echo "Error: Unable to read job name from $json_file"
+      fi
+    done
+  displayName: 'Create or Update Databricks Jobs'
+
+- script: |
+    echo "Restarting Databricks cluster $DATABRICKS_CLUSTER_ID"
+    databricks clusters restart --cluster-id $DATABRICKS_CLUSTER_ID
+    if [ $? -ne 0 ]; then
+      echo "Failed to restart Databricks cluster"
+      exit 1
+    fi
+  displayName: 'Restart Databricks Cluster'

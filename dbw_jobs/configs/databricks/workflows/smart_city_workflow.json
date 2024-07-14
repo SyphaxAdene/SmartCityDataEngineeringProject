@@ -1,0 +1,40 @@
+{
+    "name": "smart_city_workflow",
+    "email_notifications": {
+      "no_alert_for_skipped_runs": false
+    },
+    "webhook_notifications": {},
+    "timeout_seconds": 0,
+    "max_concurrent_runs": 1,
+    "tasks": [
+      {
+        "task_key": "data_fusion",
+        "run_if": "ALL_SUCCESS",
+        "python_wheel_task": {
+          "package_name": "myfirstwonderfulpackage",
+          "entry_point": "smart_city_data_fusion",
+          "parameters": ["--env", "{{env}}"]
+        },
+        "libraries": [
+            {
+            "whl": "dbfs:/FileStore/jars/myfirstwonderfulpackage-0.1.0-py3-none-any.whl"
+            }
+        ],
+        "existing_cluster_id": "{{secrets/workflow_config/cluster_id}}",
+        "timeout_seconds": 0,
+        "email_notifications": {},
+        "notification_settings": {
+          "no_alert_for_skipped_runs": false,
+          "no_alert_for_canceled_runs": false,
+          "alert_on_last_attempt": false
+        },
+        "webhook_notifications": {}
+      }
+    ],
+    "queue": {
+      "enabled": true
+    },
+    "run_as": {
+      "user_name": "{{secrets/workflow_config/run_as_user}}"
+    }
+  }

@@ -1,0 +1,9 @@
+dbw_env/
+.databricks
+.vscode/launch.json
+.vscode/settings.json
+sheet.txt
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]

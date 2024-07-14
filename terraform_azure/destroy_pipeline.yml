@@ -1,0 +1,30 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: my_terraform_vg
+
+stages:
+  - stage: Destroy
+    jobs:
+      - job: Destroy
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'
+              backendAzureRmResourceGroupName: '$(ARM_RESSOURCE_GROUP)'
+              backendAzureRmStorageAccountName: '$(ARM_BACKEND_STORAGE)'
+              backendAzureRmContainerName: '$(ARM_BACKEND_CONTAINER)'
+              backendAzureRmKey: '$(ARM_TERRAFORM_BACKUP_KEY)'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'destroy'
+              environmentServiceNameAzureRM: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'

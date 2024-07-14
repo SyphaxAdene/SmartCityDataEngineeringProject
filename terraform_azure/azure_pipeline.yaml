@@ -1,0 +1,64 @@
+trigger: none
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: my_terraform_vg
+
+stages:
+  - stage: tfvalidate
+    jobs:
+      - job: validate
+        steps:
+          - task: TerraformInstaller@1
+            displayName: terraform install ...
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            displayName: terraform init ...
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'
+              backendAzureRmResourceGroupName: '$(ARM_RESSOURCE_GROUP)'
+              backendAzureRmStorageAccountName: '$(ARM_BACKEND_STORAGE)'
+              backendAzureRmContainerName: '$(ARM_BACKEND_CONTAINER)'
+              backendAzureRmKey: '$(ARM_TERRAFORM_BACKUP_KEY)'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+  - stage: tfdeploy
+    condition: succeeded('tfvalidate')
+    dependsOn: tfvalidate
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            displayName: terraform install ...
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            displayName: terraform init ...
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'
+              backendAzureRmResourceGroupName: '$(ARM_RESSOURCE_GROUP)'
+              backendAzureRmStorageAccountName: '$(ARM_BACKEND_STORAGE)'
+              backendAzureRmContainerName: '$(ARM_BACKEND_CONTAINER)'
+              backendAzureRmKey: '$(ARM_TERRAFORM_BACKUP_KEY)'
+          - task: TerraformTaskV4@4
+            displayName: terraform plan ...
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'
+          - task: TerraformTaskV4@4
+            displayName: terraform apply ...
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'Free Trial(27c996a6-fa81-454f-a3fe-c3a98f219c23)'
+  

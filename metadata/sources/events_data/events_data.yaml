@@ -1,0 +1,256 @@
+table_name: events
+description: This table stores event data that may impact parking usage.
+source_name: "events_data"
+bronze_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/bronze/${source}/"
+silver_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/silver/${source}/"
+gold_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/gold/${source}/"
+quarantine_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/quarantine/${source}/"
+
+source:
+  type: "adls"  # Assuming events data comes from Azure Data Lake Storage
+  file_format: "json"  # or "csv", depending on your data format
+
+key_columns:
+  bronze: ["eventId"]
+  silver: ["eventId"]
+  gold: ["eventId"]
+
+schema:
+  bronze:
+    - name: eventId
+      type: string
+      nullable: false
+    - name: eventName
+      type: string
+      nullable: false
+    - name: eventType
+      type: string
+      nullable: false
+    - name: location
+      type: struct
+      fields:
+        - name: venueName
+          type: string
+          nullable: false
+        - name: address
+          type: string
+          nullable: false
+        - name: latitude
+          type: double
+          nullable: false
+        - name: longitude
+          type: double
+          nullable: false
+    - name: startTime
+      type: timestamp
+      nullable: false
+    - name: endTime
+      type: timestamp
+      nullable: false
+    - name: expectedAttendance
+      type: integer
+      nullable: true
+    - name: organizer
+      type: struct
+      fields:
+        - name: name
+          type: string
+          nullable: false
+        - name: contactEmail
+          type: string
+          nullable: false
+        - name: contactPhone
+          type: string
+          nullable: true
+    - name: ticketInfo
+      type: struct
+      fields:
+        - name: isPaidEvent
+          type: boolean
+          nullable: false
+        - name: ticketPrice
+          type: double
+          nullable: true
+    - name: parkingInfo
+      type: struct
+      fields:
+        - name: hasDedicatedParking
+          type: boolean
+          nullable: false
+        - name: parkingCapacity
+          type: integer
+          nullable: true
+        - name: parkingFee
+          type: double
+          nullable: true
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+
+  silver:
+    - name: eventId
+      type: string
+      nullable: false
+      source_col: "eventId"
+    - name: eventName
+      type: string
+      nullable: false
+      source_col: "eventName"
+    - name: eventType
+      type: string
+      nullable: false
+      source_col: "eventType"
+    - name: venueName
+      type: string
+      nullable: false
+      source_col: "location.venueName"
+    - name: address
+      type: string
+      nullable: false
+      source_col: "location.address"
+    - name: latitude
+      type: double
+      nullable: false
+      source_col: "location.latitude"
+    - name: longitude
+      type: double
+      nullable: false
+      source_col: "location.longitude"
+    - name: startTime
+      type: timestamp
+      nullable: false
+      source_col: "startTime"
+    - name: endTime
+      type: timestamp
+      nullable: false
+      source_col: "endTime"
+    - name: duration
+      type: long
+      nullable: false
+      transform_expr: "unix_timestamp(endTime) - unix_timestamp(startTime)"
+    - name: expectedAttendance
+      type: integer
+      nullable: true
+      source_col: "expectedAttendance"
+    - name: organizerName
+      type: string
+      nullable: false
+      source_col: "organizer.name"
+    - name: organizerEmail
+      type: string
+      nullable: false
+      source_col: "organizer.contactEmail"
+    - name: organizerPhone
+      type: string
+      nullable: true
+      source_col: "organizer.contactPhone"
+    - name: isPaidEvent
+      type: boolean
+      nullable: false
+      source_col: "ticketInfo.isPaidEvent"
+    - name: ticketPrice
+      type: double
+      nullable: true
+      source_col: "ticketInfo.ticketPrice"
+    - name: hasDedicatedParking
+      type: boolean
+      nullable: false
+      source_col: "parkingInfo.hasDedicatedParking"
+    - name: parkingCapacity
+      type: integer
+      nullable: true
+      source_col: "parkingInfo.parkingCapacity"
+    - name: parkingFee
+      type: double
+      nullable: true
+      source_col: "parkingInfo.parkingFee"
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+      source_col: "lastUpdated"
+    - name: processedTimestamp
+      type: timestamp
+      nullable: false
+      transform_expr: "current_timestamp()"
+
+  gold:
+    - name: eventId
+      type: string
+      nullable: false
+      source_col: "eventId"
+    - name: eventName
+      type: string
+      nullable: false
+      source_col: "eventName"
+    - name: eventType
+      type: string
+      nullable: false
+      source_col: "eventType"
+    - name: venueName
+      type: string
+      nullable: false
+      source_col: "venueName"
+    - name: address
+      type: string
+      nullable: false
+      source_col: "address"
+    - name: latitude
+      type: double
+      nullable: false
+      source_col: "latitude"
+    - name: longitude
+      type: double
+      nullable: false
+      source_col: "longitude"
+    - name: startTime
+      type: timestamp
+      nullable: false
+      source_col: "startTime"
+    - name: endTime
+      type: timestamp
+      nullable: false
+      source_col: "endTime"
+    - name: duration
+      type: interval
+      nullable: false
+      source_col: "duration"
+    - name: expectedAttendance
+      type: integer
+      nullable: true
+      source_col: "expectedAttendance"
+    - name: isPaidEvent
+      type: boolean
+      nullable: false
+      source_col: "isPaidEvent"
+    - name: ticketPrice
+      type: double
+      nullable: true
+      source_col: "ticketPrice"
+    - name: hasDedicatedParking
+      type: boolean
+      nullable: false
+      source_col: "hasDedicatedParking"
+    - name: parkingCapacity
+      type: integer
+      nullable: true
+      source_col: "parkingCapacity"
+    - name: parkingFee
+      type: double
+      nullable: true
+      source_col: "parkingFee"
+    - name: parkingDemandScore
+      type: integer
+      nullable: false
+      transform_expr: "CASE WHEN expectedAttendance IS NULL THEN 1 ELSE CAST(CEIL(expectedAttendance / 1000) AS INT) END + CASE WHEN hasDedicatedParking THEN 0 ELSE 2 END + CASE WHEN isPaidEvent THEN 1 ELSE 0 END"
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+      source_col: "lastUpdated"
+
+partitioning:
+  silver:
+    - column: "startTime"
+      granularity: "day"
+  gold:
+    - column: "startTime"
+      granularity: "month"

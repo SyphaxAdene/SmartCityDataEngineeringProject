@@ -1,0 +1,84 @@
+# TEMPLATE_validation_rules.yaml
+
+# ======================================
+# IMPORTANT: Naming Convention
+# ======================================
+# Please rename this file following the convention:
+# source_name_validation_rules.yaml
+#
+# Example: if the data source is "city_bike_data", the file should be named:
+# city_bike_data_validation_rules.yaml
+# ======================================
+
+rules:
+  - name: "Example rule: Check for null values"
+    field: "exampleField1"
+    check: "not_null"
+    criticality: "critical"
+    action: "fail"
+
+  - name: "Example rule: Check value range"
+    field: "exampleField2"
+    check: "range"
+    min: 0
+    max: 100
+    criticality: "warning"
+    action: "log"
+
+  - name: "Example rule: Check for specific values"
+    field: "exampleField3"
+    check: "in"
+    values: ["value1", "value2", "value3"]
+    criticality: "error"
+    action: "quarantine"
+
+  - name: "Example rule: Check with regex pattern"
+    field: "exampleField4"
+    check: "regex"
+    pattern: "^[A-Z]{2}\\d{4}$"
+    criticality: "warning"
+    action: "log"
+
+  - name: "Example rule: Check for unique values"
+    check: "unique"
+    fields: 
+      - "exampleField5"
+      - "exampleField6"
+    criticality: "error"
+    action: "deduplicate"
+
+  - name: "Example rule: Custom logical check"
+    check: "custom"
+    condition: "field1 > field2 and field3 != 'Invalid'"
+    criticality: "warning"
+    action: "log"
+
+  # Add more rules as needed
+
+actions:
+  fail:
+    description: "Halt the process and raise an exception"
+  log:
+    description: "Log the issue and continue processing"
+  quarantine:
+    description: "Move the problematic records to a quarantine area"
+  deduplicate:
+    description: "Remove duplicate records keeping the latest"
+  custom_action:
+    description: "Perform a custom action defined in the validation logic"
+
+# Field Explanations:
+# name: A descriptive name for the rule (string)
+# field: The data field to check (string, can be nested like "parent.child")
+# check: Type of check to perform (string, options: not_null, range, in, regex, unique, custom)
+# criticality: Severity of the issue (string, options: info, warning, error, critical)
+# action: Action to take when the rule is violated (string, should match an action defined in the actions section)
+
+# Additional fields based on the type of check:
+# min, max: For range checks (number)
+# values: For 'in' checks (list of valid values)
+# pattern: For regex checks (string containing a valid regex pattern)
+# fields: For unique checks (list of fields to check for uniqueness)
+# condition: For custom checks (string representing a logical condition)
+
+# Please replace these example rules with your actual validation rules

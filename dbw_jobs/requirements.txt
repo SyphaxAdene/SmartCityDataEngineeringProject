@@ -1,0 +1,4 @@
+databricks-connect==14.3
+PyYAML
+pytest
+confluent_kafka

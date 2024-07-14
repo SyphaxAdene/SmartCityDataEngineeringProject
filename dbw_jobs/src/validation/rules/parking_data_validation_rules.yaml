@@ -1,0 +1,39 @@
+# validation_rules.yaml
+rules:
+  - name: "Check for null stationId"
+    field: "stationId"
+    check: "not_null"
+    criticality: "critical"
+    action: "fail"
+
+  - name: "Check capacity range"
+    field: "capacity.totalSpots"
+    check: "range"
+    min: 0
+    max: 10000
+    criticality: "warning"
+    action: "log"
+
+  - name: "Check logical capacity"
+    check: "custom"
+    condition: "capacity.availableSpots <= capacity.totalSpots"
+    criticality: "error"
+    action: "quarantine"
+
+  - name: "Check for duplicate records"
+    check: "unique"
+    fields: 
+      - "stationId"
+      - "lastUpdated"
+    criticality: "warning"
+    action: "deduplicate"
+
+actions:
+  fail:
+    description: "Halt the process and raise an exception"
+  log:
+    description: "Log the issue and continue processing"
+  quarantine:
+    description: "Move the problematic records to a quarantine area"
+  deduplicate:
+    description: "Remove duplicate records keeping the latest"

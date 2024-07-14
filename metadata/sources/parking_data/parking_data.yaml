@@ -1,0 +1,394 @@
+table_name: station
+description: This table stores parking station data.
+source_name: "parking_data"
+silver_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/silver/${source}/"
+gold_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/gold/${source}/"
+quarantine_path: "abfss://data@syphaxstoragedev.dfs.core.windows.net/${env}/quarantine/${source}/"
+
+source:
+  type: "kafka"  # Options: 'kafka', 'adls'
+  kafka:
+    brokers: "secrets.kafka-scope.kafka-brokers"
+    topic: "secrets.kafka-scope.kafka-topic"
+    options:
+      sasl_username: "secrets.kafka-scope.kafka-sasl-username"
+      sasl_password: "secrets.kafka-scope.kafka-sasl-password"
+
+key_columns:
+  bronze: ["stationId"]
+  silver: ["stationId"]
+  gold: ["stationId"]
+
+schema:
+  bronze:
+    - name: stationId
+      type: string
+      nullable: false
+    - name: name
+      type: string
+      nullable: false
+    - name: location
+      type: struct
+      fields:
+        - name: address
+          type: string
+          nullable: false
+        - name: latitude
+          type: double
+          nullable: false
+        - name: longitude
+          type: double
+          nullable: false
+    - name: capacity
+      type: struct
+      fields:
+        - name: totalSpots
+          type: integer
+          nullable: false
+        - name: availableSpots
+          type: integer
+          nullable: false
+    - name: rates
+      type: struct
+      fields:
+        - name: hourlyRate
+          type: double
+          nullable: false
+        - name: dailyRate
+          type: double
+          nullable: false
+        - name: monthlyRate
+          type: double
+          nullable: false
+    - name: operatingHours
+      type: struct
+      fields:
+        - name: monday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: tuesday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: wednesday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: thursday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: friday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: saturday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: sunday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+    - name: amenities
+      type: struct
+      fields:
+        - name: hasEVCharging
+          type: boolean
+          nullable: false
+        - name: hasHandicapAccess
+          type: boolean
+          nullable: false
+        - name: hasSecurityCameras
+          type: boolean
+          nullable: false
+        - name: acceptsCreditCard
+          type: boolean
+          nullable: false
+    - name: contactInfo
+      type: struct
+      fields:
+        - name: phone
+          type: string
+          nullable: true
+        - name: email
+          type: string
+          nullable: true
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+
+  silver:
+    - name: stationId
+      type: string
+      nullable: false
+      source_col: "stationId"
+    - name: name
+      type: string
+      nullable: false
+      source_col: "name"
+    - name: address
+      type: string
+      nullable: false
+      source_col: "location.address"
+    - name: latitude
+      type: double
+      nullable: false
+      source_col: "location.latitude"
+    - name: longitude
+      type: double
+      nullable: false
+      source_col: "location.longitude"
+    - name: totalSpots
+      type: integer
+      nullable: false
+      source_col: "capacity.totalSpots"
+    - name: availableSpots
+      type: integer
+      nullable: false
+      source_col: "capacity.availableSpots"
+    - name: occupancyRate
+      type: double
+      nullable: false
+      transform_expr: "CAST(capacity.availableSpots AS DOUBLE) / CAST(capacity.totalSpots AS DOUBLE)"
+    - name: hourlyRate
+      type: double
+      nullable: false
+      source_col: "rates.hourlyRate"
+    - name: dailyRate
+      type: double
+      nullable: false
+      source_col: "rates.dailyRate"
+    - name: monthlyRate
+      type: double
+      nullable: false
+      source_col: "rates.monthlyRate"
+    - name: operatingHours
+      type: struct
+      fields:
+        - name: monday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: tuesday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: wednesday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: thursday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: friday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: saturday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+        - name: sunday
+          type: struct
+          fields:
+            - name: open
+              type: string
+              nullable: false
+            - name: close
+              type: string
+              nullable: false
+      source_col: "operatingHours"
+    - name: is24Hours
+      type: boolean
+      nullable: false
+      transform_expr: "CASE WHEN operatingHours.monday.open = '00:00' AND operatingHours.monday.close = '24:00' THEN true ELSE false END"
+    - name: hasEVCharging
+      type: boolean
+      nullable: false
+      source_col: "amenities.hasEVCharging"
+    - name: hasHandicapAccess
+      type: boolean
+      nullable: false
+      source_col: "amenities.hasHandicapAccess"
+    - name: hasSecurityCameras
+      type: boolean
+      nullable: false
+      source_col: "amenities.hasSecurityCameras"
+    - name: acceptsCreditCard
+      type: boolean
+      nullable: false
+      source_col: "amenities.acceptsCreditCard"
+    - name: phone
+      type: string
+      nullable: true
+      source_col: "contactInfo.phone"
+    - name: email
+      type: string
+      nullable: true
+      source_col: "contactInfo.email"
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+      source_col: "lastUpdated"
+    - name: processedTimestamp
+      type: timestamp
+      nullable: false
+      transform_expr: "current_timestamp()"
+
+  gold:
+    - name: stationId
+      type: string
+      nullable: false
+      source_col: "stationId"
+    - name: name
+      type: string
+      nullable: false
+      source_col: "name"
+    - name: address
+      type: string
+      nullable: false
+      source_col: "address"
+    - name: latitude
+      type: double
+      nullable: false
+      source_col: "latitude"
+    - name: longitude
+      type: double
+      nullable: false
+      source_col: "longitude"
+    - name: totalSpots
+      type: integer
+      nullable: false
+      source_col: "totalSpots"
+    - name: availableSpots
+      type: integer
+      nullable: false
+      source_col: "availableSpots"
+    - name: avgDailyOccupancyRate
+      type: double
+      nullable: false
+      transform_expr: "AVG(occupancyRate) OVER (PARTITION BY stationId ORDER BY DATE(lastUpdated) ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)"
+    - name: hourlyRate
+      type: double
+      nullable: false
+      source_col: "hourlyRate"
+    - name: dailyRate
+      type: double
+      nullable: false
+      source_col: "dailyRate"
+    - name: monthlyRate
+      type: double
+      nullable: false
+      source_col: "monthlyRate"
+    - name: is24Hours
+      type: boolean
+      nullable: false
+      source_col: "is24Hours"
+    - name: hasEVCharging
+      type: boolean
+      nullable: false
+      source_col: "hasEVCharging"
+    - name: hasHandicapAccess
+      type: boolean
+      nullable: false
+      source_col: "hasHandicapAccess"
+    - name: hasSecurityCameras
+      type: boolean
+      nullable: false
+      source_col: "hasSecurityCameras"
+    - name: acceptsCreditCard
+      type: boolean
+      nullable: false
+      source_col: "acceptsCreditCard"
+    - name: amenityScore
+      type: integer
+      nullable: false
+      transform_expr: "CAST(hasEVCharging AS INT) + CAST(hasHandicapAccess AS INT) + CAST(hasSecurityCameras AS INT) + CAST(acceptsCreditCard AS INT)"
+    - name: phone
+      type: string
+      nullable: true
+      source_col: "phone"
+    - name: email
+      type: string
+      nullable: true
+      source_col: "email"
+    - name: lastUpdated
+      type: timestamp
+      nullable: false
+      source_col: "lastUpdated"
+
+partitioning:
+  silver:
+    - column: "lastUpdated"
+      granularity: "day"
+  gold:
+    - column: "lastUpdated"
+      granularity: "month"

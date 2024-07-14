@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Bronze to Silver",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/jobs/bronze_to_silver.py",
+            "args": [
+                "--env", "local",
+                "--source", "parking_data"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Silver to Gold",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/jobs/silver_to_gold.py",
+            "args": [
+                "--env", "local",
+                "--source", "parking_data"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
