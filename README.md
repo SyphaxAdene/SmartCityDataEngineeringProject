@@ -15,7 +15,7 @@
 
 ## Data Sources
 ### Parking Data
-Parking data is collected from IoT sensors in parking facilities across the city. This data includes:
+Parking data is produced by me (mock data) and sent by the kafka producer (kafka repo) to Kafka Topic which is located in the Confluent Cloud. This data includes:
 
 Station ID
 Total parking spots
@@ -24,7 +24,7 @@ Lattitude
 Longitude ...etc
 
 ### Events Data
-Events data is collected from various sources, including city event calendars and ticketing systems. It includes:
+Events data is produced by me (mock data) in my local computer and send them to Azure SFTP using the WINSCP tool, Then ingested by ADF from SFTP to Bronze Layer. It includes:
 
 Event name
 Event type
