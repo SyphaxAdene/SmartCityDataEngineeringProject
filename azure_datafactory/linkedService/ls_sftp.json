@@ -1,0 +1,22 @@
+{
+	"name": "ls_sftp",
+	"properties": {
+		"annotations": [],
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "sftpeventsdatastorage.blob.core.windows.net",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "sftpeventsdatastorage.sftpuser",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_Az_Kv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sftppassword"
+			}
+		}
+	}
+}

@@ -1,0 +1,99 @@
+{
+	"name": "events_data_source_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/events_data"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"eventId": {
+					"type": "string"
+				},
+				"eventName": {
+					"type": "string"
+				},
+				"eventType": {
+					"type": "string"
+				},
+				"location": {
+					"type": "object",
+					"properties": {
+						"venueName": {
+							"type": "string"
+						},
+						"address": {
+							"type": "string"
+						},
+						"latitude": {
+							"type": "number"
+						},
+						"longitude": {
+							"type": "number"
+						}
+					}
+				},
+				"startTime": {
+					"type": "string"
+				},
+				"endTime": {
+					"type": "string"
+				},
+				"expectedAttendance": {
+					"type": "integer"
+				},
+				"organizer": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"contactEmail": {
+							"type": "string"
+						},
+						"contactPhone": {
+							"type": "string"
+						}
+					}
+				},
+				"ticketInfo": {
+					"type": "object",
+					"properties": {
+						"isPaidEvent": {
+							"type": "boolean"
+						},
+						"ticketPrice": {
+							"type": "number"
+						}
+					}
+				},
+				"parkingInfo": {
+					"type": "object",
+					"properties": {
+						"hasDedicatedParking": {
+							"type": "boolean"
+						},
+						"parkingCapacity": {
+							"type": "integer"
+						},
+						"parkingFee": {
+							"type": "number"
+						}
+					}
+				},
+				"lastUpdated": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

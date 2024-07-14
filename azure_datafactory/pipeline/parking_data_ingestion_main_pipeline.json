@@ -1,0 +1,47 @@
+{
+	"name": "parking_data_ingestion_main_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "parking_data_ingestion",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "run_databricks_workflow",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"source": "parking_data",
+						"env": {
+							"value": "@pipeline().parameters.env",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"env": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"JobStatus": {
+				"type": "String",
+				"defaultValue": "Running"
+			}
+		},
+		"folder": {
+			"name": "parking_data"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-04-03T13:21:37Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

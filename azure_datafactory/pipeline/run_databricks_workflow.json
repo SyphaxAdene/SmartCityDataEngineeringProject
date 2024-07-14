@@ -1,0 +1,269 @@
+{
+	"name": "run_databricks_workflow",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Jobs API",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": {
+						"value": "@concat('https://',pipeline().parameters.DatabricksWorkspaceID,'.azuredatabricks.net/api/2.1/jobs/run-now')",
+						"type": "Expression"
+					},
+					"body": {
+						"value": "{\n  \"job_id\": @{pipeline().parameters.JobID},\n  \"python_params\": [\n    \"--source\",\n    \"@{pipeline().parameters.source}\",\n    \"--env\",\n    \"@{pipeline().parameters.env}\"\n  ]\n}",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "ServicePrincipal",
+						"userTenant": "34930564-d72b-472a-a9fe-81203764f6a9",
+						"username": "a3f7959e-163d-4bb2-af2e-c3f249ac6de6",
+						"resource": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+						"password": {
+							"type": "AzureKeyVaultSecret",
+							"store": {
+								"referenceName": "ls_Az_Kv",
+								"type": "LinkedServiceReference"
+							},
+							"secretName": "service-principal-key"
+						}
+					}
+				}
+			},
+			{
+				"name": "Wait Until Job Completes",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "Execute Jobs API",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@or(and(and(not(equals(variables('JobStatus'),'RUNNING')), not(equals(variables('JobStatus'),'PENDING'))), not(equals(variables('JobStatus'),'QUEUED'))), greater(variables('RetryCount'), pipeline().parameters.MaxRetries))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Check Job Run API",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"url": {
+									"value": "@concat('https://',pipeline().parameters.DatabricksWorkspaceID,'.azuredatabricks.net/api/2.1/jobs/runs/get?run_id=',activity('Execute Jobs API').output.run_id)",
+									"type": "Expression"
+								},
+								"authentication": {
+									"type": "ServicePrincipal",
+									"userTenant": "34930564-d72b-472a-a9fe-81203764f6a9",
+									"username": "a3f7959e-163d-4bb2-af2e-c3f249ac6de6",
+									"resource": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+									"password": {
+										"type": "AzureKeyVaultSecret",
+										"store": {
+											"referenceName": "ls_Az_Kv",
+											"type": "LinkedServiceReference"
+										},
+										"secretName": "service-principal-key"
+									}
+								}
+							}
+						},
+						{
+							"name": "Set Job Status",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Check Job Run API",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "JobStatus",
+								"value": {
+									"value": "@activity('Check Job Run API').output.state.life_cycle_state",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Increment Retry Count",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set Job Status",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "RetryCount",
+								"value": {
+									"value": "@add(1, 1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Wait to Recheck API",
+							"type": "Wait",
+							"dependsOn": [
+								{
+									"activity": "Increment Retry Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": {
+									"value": "@pipeline().parameters.WaitSeconds",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "Capture Full API Response",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Wait Until Job Completes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FullApiResponse",
+					"value": {
+						"value": "@string(activity('Check Job Run API').output)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Check Final Job State",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Capture Full API Response",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@and(equals(variables('JobStatus'),'TERMINATED'), equals(activity('Check Job Run API').output.state.result_state, 'SUCCESS'))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": {
+									"value": "@concat('Job failed or ended in unexpected state. ',\n'Final status: ', coalesce(variables('JobStatus'), 'Unknown'), \n', Result state: ', coalesce(string(activity('Check Job Run API').output.state.result_state), 'Unknown'), \n', State message: ', coalesce(string(activity('Check Job Run API').output.state.state_message), 'No message'), \n', Cluster state: ', coalesce(string(activity('Check Job Run API').output.cluster_instance.cluster_id), 'Unknown'), \n', Full API Response: ', coalesce(variables('FullApiResponse'), 'No response captured'))",
+									"type": "Expression"
+								},
+								"errorCode": "ADF_DATABRICKS_JOB_FAILED"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"JobID": {
+				"type": "string",
+				"defaultValue": "454115850012341"
+			},
+			"DatabricksWorkspaceID": {
+				"type": "string",
+				"defaultValue": "adb-3665822605942945.5"
+			},
+			"WaitSeconds": {
+				"type": "int",
+				"defaultValue": 5
+			},
+			"MaxRetries": {
+				"type": "int",
+				"defaultValue": 60
+			},
+			"source": {
+				"type": "string"
+			},
+			"env": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"JobStatus": {
+				"type": "String",
+				"defaultValue": "RUNNING"
+			},
+			"RetryCount": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"FullApiResponse": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "utils"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-10T16:30:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

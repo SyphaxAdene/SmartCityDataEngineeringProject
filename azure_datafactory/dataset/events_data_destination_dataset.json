@@ -1,0 +1,30 @@
+{
+	"name": "events_data_destination_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"env": {
+				"type": "string"
+			},
+			"source": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@concat(dataset().env, '/bronze/', dataset().source)",
+					"type": "Expression"
+				},
+				"fileSystem": "data"
+			}
+		},
+		"schema": {}
+	}
+}

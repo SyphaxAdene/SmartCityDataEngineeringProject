@@ -1,0 +1,6 @@
+{
+	"name": "syphaxintegrationRuntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

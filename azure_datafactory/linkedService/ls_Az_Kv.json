@@ -1,0 +1,10 @@
+{
+	"name": "ls_Az_Kv",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-az-kv.vault.azure.net/"
+		}
+	}
+}

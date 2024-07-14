@@ -1,0 +1,99 @@
+{
+    "name": "events_data_ingestion_main_pipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "Execute Copy SFTP to ADLS",
+                "type": "ExecutePipeline",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "copy_sftp_to_adls",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "env": {
+                            "value": "@pipeline().parameters.env",
+                            "type": "Expression"
+                        },
+                        "source": {
+                            "value": "@pipeline().parameters.source",
+                            "type": "Expression"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Execute Run Databricks Job",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Execute Copy SFTP to ADLS",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "Run Databricks Job",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "JobID": {
+                            "value": "@pipeline().parameters.JobID",
+                            "type": "Expression"
+                        },
+                        "DatabricksWorkspaceID": {
+                            "value": "@pipeline().parameters.DatabricksWorkspaceID",
+                            "type": "Expression"
+                        },
+                        "WaitSeconds": {
+                            "value": "@pipeline().parameters.WaitSeconds",
+                            "type": "Expression"
+                        },
+                        "source": {
+                            "value": "@pipeline().parameters.source",
+                            "type": "Expression"
+                        },
+                        "env": {
+                            "value": "@pipeline().parameters.env",
+                            "type": "Expression"
+                        }
+                    }
+                }
+            }
+        ],
+        "parameters": {
+            "env": {
+                "type": "string",
+                "defaultValue": ""
+            },
+            "source": {
+                "type": "string",
+                "defaultValue": "events_data"
+            },
+            "JobID": {
+                "type": "string",
+                "defaultValue": "616881214076959"
+            },
+            "DatabricksWorkspaceID": {
+                "type": "string",
+                "defaultValue": "adb-3665822605942945.5"
+            },
+            "WaitSeconds": {
+                "type": "int",
+                "defaultValue": 5
+            }
+        },
+        "folder": {
+            "name": "events_data"
+        },
+        "annotations": []
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

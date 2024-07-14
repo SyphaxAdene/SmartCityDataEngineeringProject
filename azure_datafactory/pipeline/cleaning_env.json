@@ -1,0 +1,38 @@
+{
+	"name": "cleaning_env",
+	"properties": {
+		"activities": [
+			{
+				"name": "cleaning_env",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "run_cleaning_databricks_workflow",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"env": {
+							"value": "@pipeline().parameters.env",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"env": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "cleaning"
+		},
+		"annotations": []
+	}
+}

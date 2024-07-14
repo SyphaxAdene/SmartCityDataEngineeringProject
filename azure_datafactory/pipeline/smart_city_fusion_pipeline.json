@@ -1,0 +1,38 @@
+{
+	"name": "smart_city_fusion_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "smart city",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "run_smart_city_databricks_workflow",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"env": {
+							"value": "@pipeline().parameters.env",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"env": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "smart_city"
+		},
+		"annotations": []
+	}
+}
