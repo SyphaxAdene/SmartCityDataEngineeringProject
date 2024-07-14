@@ -1,0 +1,214 @@
+
+[
+{
+    "stationId": "STATION311",
+    "name": "Convention Center West Parking",
+    "location": {
+        "address": "9860 Universal Blvd, Orlando, FL 32819",
+        "latitude": 28.4257,
+        "longitude": -81.4709
+    },
+    "capacity": {
+        "totalSpots": 2500,
+        "availableSpots": 750
+    },
+    "rates": {
+        "hourlyRate": 4.00,
+        "dailyRate": 30.00,
+        "monthlyRate": 500.00
+    },
+    "operatingHours": {
+        "monday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "tuesday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "wednesday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "thursday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "friday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "saturday": {
+            "open": "05:00",
+            "close": "23:59"
+        },
+        "sunday": {
+            "open": "05:00",
+            "close": "23:59"
+        }
+    },
+    "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+    },
+    "contactInfo": {
+        "phone": "+1-407-555-4321",
+        "email": "parking@occc.com"
+    },
+    "lastUpdated": "2024-07-12T09:30:00Z"
+},
+{
+    "stationId": "BOST002",
+    "name": "Prudential Center Garage",
+    "location": {
+    "address": "800 Boylston St, Boston, MA 02199",
+    "latitude": 42.3479,
+    "longitude": -71.0817
+    },
+    "capacity": {
+    "totalSpots": 3600,
+    "availableSpots": 2105
+    },
+    "rates": {
+    "hourlyRate": 14.00,
+    "dailyRate": 42.00,
+    "monthlyRate": 480.00
+    },
+    "operatingHours": {
+    "monday": { "open": "00:00", "close": "23:59" },
+    "tuesday": { "open": "00:00", "close": "23:59" },
+    "wednesday": { "open": "00:00", "close": "23:59" },
+    "thursday": { "open": "00:00", "close": "23:59" },
+    "friday": { "open": "00:00", "close": "23:59" },
+    "saturday": { "open": "00:00", "close": "23:59" },
+    "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+    "hasEVCharging": true,
+    "hasHandicapAccess": true,
+    "hasSecurityCameras": true,
+    "acceptsCreditCard": true
+    },
+    "contactInfo": {
+    "phone": "+1-617-555-2468",
+    "email": "parking@prudentialcenter.com"
+    },
+    "lastUpdated": "2024-07-12T15:30:00Z"
+},
+{
+    "stationId": "CHI002",
+    "name": "Grant Park North Garage",
+    "location": {
+    "address": "25 N Michigan Ave, Chicago, IL 60602",
+    "latitude": 41.8817,
+    "longitude": -87.6245
+    },
+    "capacity": {
+    "totalSpots": 1850,
+    "availableSpots": 962
+    },
+    "rates": {
+    "hourlyRate": 13.00,
+    "dailyRate": 40.00,
+    "monthlyRate": 320.00
+    },
+    "operatingHours": {
+    "monday": { "open": "00:00", "close": "23:59" },
+    "tuesday": { "open": "00:00", "close": "23:59" },
+    "wednesday": { "open": "00:00", "close": "23:59" },
+    "thursday": { "open": "00:00", "close": "23:59" },
+    "friday": { "open": "00:00", "close": "23:59" },
+    "saturday": { "open": "00:00", "close": "23:59" },
+    "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+    "hasEVCharging": true,
+    "hasHandicapAccess": true,
+    "hasSecurityCameras": true,
+    "acceptsCreditCard": true
+    },
+    "contactInfo": {
+    "phone": "+1-312-555-3434",
+    "email": "info@grantparknorthgarage.com"
+    },
+    "lastUpdated": "2024-07-12T10:45:00Z"
+},
+{
+    "stationId": "SF002",
+    "name": "Fifth & Mission Yerba Buena Garage",
+    "location": {
+    "address": "833 Mission St, San Francisco, CA 94103",
+    "latitude": 37.7833,
+    "longitude": -122.4052
+    },
+    "capacity": {
+    "totalSpots": 2585,
+    "availableSpots": 1423
+    },
+    "rates": {
+    "hourlyRate": 16.00,
+    "dailyRate": 48.00,
+    "monthlyRate": 380.00
+    },
+    "operatingHours": {
+    "monday": { "open": "00:00", "close": "23:59" },
+    "tuesday": { "open": "00:00", "close": "23:59" },
+    "wednesday": { "open": "00:00", "close": "23:59" },
+    "thursday": { "open": "00:00", "close": "23:59" },
+    "friday": { "open": "00:00", "close": "23:59" },
+    "saturday": { "open": "00:00", "close": "23:59" },
+    "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+    "hasEVCharging": true,
+    "hasHandicapAccess": true,
+    "hasSecurityCameras": true,
+    "acceptsCreditCard": true
+    },
+    "contactInfo": {
+    "phone": "+1-415-555-5678",
+    "email": "info@fifthandmissiongarage.com"
+    },
+    "lastUpdated": "2024-07-12T13:00:00Z"
+},
+{
+    "stationId": "NYC002",
+    "name": "Central Park Zoo Parking",
+    "location": {
+    "address": "830 5th Ave, New York, NY 10065",
+    "latitude": 40.7677,
+    "longitude": -73.9718
+    },
+    "capacity": {
+    "totalSpots": 400,
+    "availableSpots": 285
+    },
+    "rates": {
+    "hourlyRate": 20.00,
+    "dailyRate": 55.00,
+    "monthlyRate": 500.00
+    },
+    "operatingHours": {
+    "monday": { "open": "06:00", "close": "23:00" },
+    "tuesday": { "open": "06:00", "close": "23:00" },
+    "wednesday": { "open": "06:00", "close": "23:00" },
+    "thursday": { "open": "06:00", "close": "23:00" },
+    "friday": { "open": "06:00", "close": "23:00" },
+    "saturday": { "open": "06:00", "close": "23:00" },
+    "sunday": { "open": "06:00", "close": "23:00" }
+    },
+    "amenities": {
+    "hasEVCharging": true,
+    "hasHandicapAccess": true,
+    "hasSecurityCameras": true,
+    "acceptsCreditCard": true
+    },
+    "contactInfo": {
+    "phone": "+1-212-555-7890",
+    "email": "parking@centralparkzoo.com"
+    },
+    "lastUpdated": "2024-07-12T12:30:00Z"
+}
+]

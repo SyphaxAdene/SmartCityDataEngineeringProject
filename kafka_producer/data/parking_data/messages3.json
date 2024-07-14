@@ -1,0 +1,154 @@
+[
+{
+    "stationId": "ORL001",
+    "name": "Disney Springs Lime Garage",
+    "location": {
+      "address": "1486 East Buena Vista Drive, Orlando, FL 32830",
+      "latitude": 28.3702,
+      "longitude": -81.5201
+    },
+    "capacity": {
+      "totalSpots": 3000,
+      "availableSpots": 1250
+    },
+    "rates": {
+      "hourlyRate": 10.00,
+      "dailyRate": 25.00,
+      "monthlyRate": 100.00
+    },
+    "operatingHours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+      "hasEVCharging": true,
+      "hasHandicapAccess": true,
+      "hasSecurityCameras": true,
+      "acceptsCreditCard": true
+    },
+    "contactInfo": {
+      "phone": "+1-407-555-1234",
+      "email": "parking@disneysprings.com"
+    },
+    "lastUpdated": "2024-07-12T14:30:00Z"
+  },
+  {
+    "stationId": "ORL002",
+    "name": "Universal CityWalk Parking Complex",
+    "location": {
+      "address": "6000 Universal Blvd, Orlando, FL 32819",
+      "latitude": 28.4742,
+      "longitude": -81.4677
+    },
+    "capacity": {
+      "totalSpots": 2500,
+      "availableSpots": 750
+    },
+    "rates": {
+      "hourlyRate": 12.00,
+      "dailyRate": 30.00,
+      "monthlyRate": 125.00
+    },
+    "operatingHours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+      "hasEVCharging": true,
+      "hasHandicapAccess": true,
+      "hasSecurityCameras": true,
+      "acceptsCreditCard": true
+    },
+    "contactInfo": {
+      "phone": "+1-407-555-5678",
+      "email": "parking@universalorlando.com"
+    },
+    "lastUpdated": "2024-07-12T15:15:00Z"
+  },
+  {
+    "stationId": "TPA001",
+    "name": "Ybor City Parking Garage",
+    "location": {
+      "address": "1500 E 5th Ave, Tampa, FL 33605",
+      "latitude": 27.9601,
+      "longitude": -82.4396
+    },
+    "capacity": {
+      "totalSpots": 1500,
+      "availableSpots": 875
+    },
+    "rates": {
+      "hourlyRate": 2.00,
+      "dailyRate": 12.00,
+      "monthlyRate": 70.00
+    },
+    "operatingHours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+      "hasEVCharging": true,
+      "hasHandicapAccess": true,
+      "hasSecurityCameras": true,
+      "acceptsCreditCard": true
+    },
+    "contactInfo": {
+      "phone": "+1-813-555-1111",
+      "email": "parking@yborcity.org"
+    },
+    "lastUpdated": "2024-07-12T16:00:00Z"
+  },
+  {
+    "stationId": "TPA002",
+    "name": "Tampa Convention Center Garage",
+    "location": {
+      "address": "333 S Franklin St, Tampa, FL 33602",
+      "latitude": 27.9419,
+      "longitude": -82.4579
+    },
+    "capacity": {
+      "totalSpots": 2000,
+      "availableSpots": 1100
+    },
+    "rates": {
+      "hourlyRate": 4.00,
+      "dailyRate": 20.00,
+      "monthlyRate": 100.00
+    },
+    "operatingHours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+      "hasEVCharging": true,
+      "hasHandicapAccess": true,
+      "hasSecurityCameras": true,
+      "acceptsCreditCard": true
+    },
+    "contactInfo": {
+      "phone": "+1-813-555-2222",
+      "email": "parking@tampaconventioncenter.com"
+    },
+    "lastUpdated": "2024-07-12T16:45:00Z"
+  }
+]

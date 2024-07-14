@@ -1,0 +1,154 @@
+[
+{
+    "stationId": "BOST001",
+    "name": "Government Center Garage",
+    "location": {
+        "address": "50 New Sudbury St, Boston, MA 02114",
+        "latitude": 42.3615,
+        "longitude": -71.0597
+    },
+    "capacity": {
+        "totalSpots": 2300,
+        "availableSpots": 487
+    },
+    "rates": {
+        "hourlyRate": 12.00,
+        "dailyRate": 39.00,
+        "monthlyRate": 450.00
+    },
+    "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+    },
+    "contactInfo": {
+        "phone": "+1-617-555-7890",
+        "email": "info@governmentcentergarage.com"
+    },
+    "lastUpdated": "2024-07-12T14:15:00Z"
+},
+{
+    "stationId": "CHI001",
+    "name": "Millennium Park Garage",
+    "location": {
+        "address": "5 S Columbus Dr, Chicago, IL 60603",
+        "latitude": 41.8816,
+        "longitude": -87.6205
+    },
+    "capacity": {
+        "totalSpots": 2126,
+        "availableSpots": 543
+    },
+    "rates": {
+        "hourlyRate": 15.00,
+        "dailyRate": 45.00,
+        "monthlyRate": 350.00
+    },
+    "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+    },
+    "contactInfo": {
+        "phone": "+1-312-555-1212",
+        "email": "info@millenniumparkgarage.com"
+    },
+    "lastUpdated": "2024-07-12T09:30:00Z"
+},
+{
+    "stationId": "SF001",
+    "name": "Union Square Garage",
+    "location": {
+        "address": "333 Post St, San Francisco, CA 94108",
+        "latitude": 37.7879,
+        "longitude": -122.4075
+    },
+    "capacity": {
+        "totalSpots": 985,
+        "availableSpots": 202
+    },
+    "rates": {
+        "hourlyRate": 18.00,
+        "dailyRate": 52.00,
+        "monthlyRate": 400.00
+    },
+    "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+    },
+    "contactInfo": {
+        "phone": "+1-415-555-7890",
+        "email": "info@unionsquaregarage.com"
+    },
+    "lastUpdated": "2024-07-12T11:45:00Z"
+},
+{
+    "stationId": "NYC001",
+    "name": "Times Square Parking",
+    "location": {
+        "address": "223 W 46th St, New York, NY 10036",
+        "latitude": 40.7589,
+        "longitude": -73.9851
+    },
+    "capacity": {
+        "totalSpots": 750,
+        "availableSpots": 98
+    },
+    "rates": {
+        "hourlyRate": 25.00,
+        "dailyRate": 65.00,
+        "monthlyRate": 550.00
+    },
+    "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+    },
+    "contactInfo": {
+        "phone": "+1-212-555-4321",
+        "email": "info@timessquareparking.com"
+    },
+    "lastUpdated": "2024-07-12T08:15:00Z"
+}
+]

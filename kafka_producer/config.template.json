@@ -1,0 +1,9 @@
+{
+    "bootstrap.servers": "your-kafka-bootstrap-servers",
+    "sasl.mechanisms": "PLAIN",
+    "security.protocol": "SASL_SSL",
+    "sasl.username": "your-api-key",
+    "sasl.password": "your-api-secret",
+    "group.id": "my-consumer-group",
+    "auto.offset.reset": "earliest"
+}

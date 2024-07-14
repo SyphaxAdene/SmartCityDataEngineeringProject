@@ -1,0 +1,154 @@
+[
+    {
+      "stationId": "COL001",
+      "name": "Short North Parking Garage",
+      "location": {
+        "address": "45 E Lincoln St, Columbus, OH 43215",
+        "latitude": 39.9746,
+        "longitude": -83.0037
+      },
+      "capacity": {
+        "totalSpots": 700,
+        "availableSpots": 320
+      },
+      "rates": {
+        "hourlyRate": 2.00,
+        "dailyRate": 15.00,
+        "monthlyRate": 120.00
+      },
+      "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+      },
+      "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+      },
+      "contactInfo": {
+        "phone": "+1-614-555-1234",
+        "email": "parking@shortnorth.org"
+      },
+      "lastUpdated": "2024-07-12T17:30:00Z"
+    },
+    {
+      "stationId": "COL002",
+      "name": "Arena District Parking",
+      "location": {
+        "address": "355 John H McConnell Blvd, Columbus, OH 43215",
+        "latitude": 39.9694,
+        "longitude": -83.0060
+      },
+      "capacity": {
+        "totalSpots": 1500,
+        "availableSpots": 750
+      },
+      "rates": {
+        "hourlyRate": 3.00,
+        "dailyRate": 20.00,
+        "monthlyRate": 150.00
+      },
+      "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+      },
+      "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+      },
+      "contactInfo": {
+        "phone": "+1-614-555-5678",
+        "email": "parking@arenadistrict.com"
+      },
+      "lastUpdated": "2024-07-12T18:15:00Z"
+    },
+    {
+      "stationId": "PHL001",
+      "name": "Independence Mall Parking",
+      "location": {
+        "address": "41 N 6th St, Philadelphia, PA 19106",
+        "latitude": 39.9516,
+        "longitude": -75.1498
+      },
+      "capacity": {
+        "totalSpots": 600,
+        "availableSpots": 175
+      },
+      "rates": {
+        "hourlyRate": 5.00,
+        "dailyRate": 25.00,
+        "monthlyRate": 300.00
+      },
+      "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+      },
+      "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+      },
+      "contactInfo": {
+        "phone": "+1-215-555-1111",
+        "email": "parking@independencemall.com"
+      },
+      "lastUpdated": "2024-07-12T19:00:00Z"
+    },
+    {
+      "stationId": "PHL002",
+      "name": "Rittenhouse Square Garage",
+      "location": {
+        "address": "2028-48 Walnut St, Philadelphia, PA 19103",
+        "latitude": 39.9505,
+        "longitude": -75.1740
+      },
+      "capacity": {
+        "totalSpots": 900,
+        "availableSpots": 280
+      },
+      "rates": {
+        "hourlyRate": 7.00,
+        "dailyRate": 35.00,
+        "monthlyRate": 350.00
+      },
+      "operatingHours": {
+        "monday": { "open": "00:00", "close": "23:59" },
+        "tuesday": { "open": "00:00", "close": "23:59" },
+        "wednesday": { "open": "00:00", "close": "23:59" },
+        "thursday": { "open": "00:00", "close": "23:59" },
+        "friday": { "open": "00:00", "close": "23:59" },
+        "saturday": { "open": "00:00", "close": "23:59" },
+        "sunday": { "open": "00:00", "close": "23:59" }
+      },
+      "amenities": {
+        "hasEVCharging": true,
+        "hasHandicapAccess": true,
+        "hasSecurityCameras": true,
+        "acceptsCreditCard": true
+      },
+      "contactInfo": {
+        "phone": "+1-215-555-2222",
+        "email": "parking@rittenhousesquare.com"
+      },
+      "lastUpdated": "2024-07-12T19:45:00Z"
+    }
+  ]
