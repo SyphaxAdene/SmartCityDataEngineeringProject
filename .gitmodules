@@ -1,0 +1,12 @@
+[submodule "dbw_jobs"]
+	path = dbw_jobs
+	url = https://github.com/SyphaxAdene/dbw_jobs.git
+[submodule "kafka"]
+	path = kafka
+	url = https://github.com/SyphaxAdene/kafka.git
+[submodule "metadata"]
+	path = metadata
+	url = https://github.com/SyphaxAdene/metadata.git
+[submodule "terraform_azure"]
+	path = terraform_azure
+	url = https://github.com/SyphaxAdene/terraform_azure.git
